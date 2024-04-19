@@ -13,7 +13,9 @@ import(std.maybe)
 import(posix.posix)
 
 def(main, +World -- +World,
-  $*)
+  $*
+  ??
+  0 prim-posix-exit)
 " >temp/eval.mth
 
 compile() {
@@ -23,11 +25,11 @@ compile() {
     -p posix:/opt/mirth/src/posix \
     -p std:/opt/mirth/src/std \
     -o temp/eval.c \
-    2>&1 >/compile.log
+    2>&1 >compile.log
   mkdir -p bin
   cc temp/eval.c \
     -o bin/temp \
-    2>&1 >/compile.log
+    2>&1 >>compile.log
 }
 
 
