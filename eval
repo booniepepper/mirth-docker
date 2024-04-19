@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eu
+
+echo "$@" >temp.mth
+
+# stderr redirection and exits are temporary until I figure out how to handle
+# them in the Factor code for Discord
+2>&1 modal temp.mth || exit 0
