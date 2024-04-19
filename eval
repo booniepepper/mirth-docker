@@ -24,17 +24,15 @@ compile() {
     -p mirth:/opt/mirth/src/mirth \
     -p posix:/opt/mirth/src/posix \
     -p std:/opt/mirth/src/std \
-    -o temp/eval.c \
-    2>&1 >compile.log
+    -o temp/eval.c
   mkdir -p bin
   cc temp/eval.c \
-    -o bin/temp \
-    2>&1 >>compile.log
+    -o bin/temp
 }
 
 
 # stderr redirection and exits are temporary until discord bots handle them properly.
-if ! compile 2>&1 >/dev/null
+if ! compile >>compile.log 2>>compile.log
 then
   echo '=== ERRORS ==='
   cat compile.log
