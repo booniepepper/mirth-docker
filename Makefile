@@ -7,8 +7,7 @@ build:
 
 .PHONY: test
 test: build
-	echo 'WRITE A TEST, SILLY!'
-	#docker run $(tag) "#01 #02 ADD"
+	docker run $(tag) '"Greetings, Mirthling!" put line'
 
 .PHONY: release
 release: build test

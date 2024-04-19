@@ -2,8 +2,43 @@
 
 set -eu
 
-echo "$@" >temp.mth
+mkdir -p temp
 
-# stderr redirection and exits are temporary until I figure out how to handle
-# them in the Factor code for Discord
-2>&1 modal temp.mth || exit 0
+echo "\
+module(temp.eval)
+
+import(std.prelude)
+import(std.list)
+import(std.maybe)
+import(posix.posix)
+
+def(main, +World -- +World,
+  $*)
+" >temp/eval.mth
+
+compile() {
+  mirth temp/eval.mth \
+    -p temp:temp \
+    -p mirth:/opt/mirth/src/mirth \
+    -p posix:/opt/mirth/src/posix \
+    -p std:/opt/mirth/src/std \
+    -o temp/eval.c \
+    2>&1 >/compile.log
+  mkdir -p bin
+  cc temp/eval.c \
+    -o bin/temp \
+    2>&1 >/compile.log
+}
+
+
+# stderr redirection and exits are temporary until discord bots handle them properly.
+if ! compile 2>&1 >/dev/null
+then
+  echo '=== ERRORS ==='
+  cat compile.log
+  echo '=== SOURCE ==='
+  cat temp/eval.mth
+  exit 0
+fi
+
+2>&1 bin/temp || exit 0
