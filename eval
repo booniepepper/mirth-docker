@@ -10,17 +10,20 @@ module(temp.eval)
 import(std.buffer)
 import(std.byte)
 import(std.either)
+import(std.file)
+import(std.input)
 import(std.lazy)
 import(std.list)
 import(std.map)
 import(std.maybe)
+import(std.output)
 import(std.path)
+import(std.posix)
 import(std.prelude)
 import(std.set)
 import(std.stack)
 import(std.str)
-import(posix.file)
-import(posix.posix)
+import(std.terminal)
 
 def(main, +World -- +World,
   $*
@@ -31,9 +34,8 @@ def(main, +World -- +World,
 compile() {
   mirth temp/eval.mth \
     -p temp:temp \
-    -p mirth:/opt/mirth/src/mirth \
-    -p posix:/opt/mirth/src/posix \
-    -p std:/opt/mirth/src/std \
+    -p mirth:/opt/mirth/src \
+    -p std:/opt/mirth/lib/std \
     -o temp/eval.c
   mkdir -p bin
   cc temp/eval.c \
