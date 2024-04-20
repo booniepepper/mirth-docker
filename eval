@@ -7,9 +7,19 @@ mkdir -p temp
 echo "\
 module(temp.eval)
 
-import(std.prelude)
+import(std.buffer)
+import(std.byte)
+import(std.either)
+import(std.lazy)
 import(std.list)
+import(std.map)
 import(std.maybe)
+import(std.path)
+import(std.prelude)
+import(std.set)
+import(std.stack)
+import(std.str)
+import(posix.file)
 import(posix.posix)
 
 def(main, +World -- +World,
@@ -36,8 +46,6 @@ if ! compile >>compile.log 2>>compile.log
 then
   echo '=== ERRORS ==='
   cat compile.log
-  echo '=== SOURCE ==='
-  cat temp/eval.mth
   exit 0
 fi
 
